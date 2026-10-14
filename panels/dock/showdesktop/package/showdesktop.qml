@@ -22,7 +22,7 @@ AppletItem {
 
     PanelToolTip {
         Accessible.role: Accessible.ToolTip
-        Accessible.id: "ShowDesktop"
+        Component.onCompleted: { Accessible.id = "ShowDesktop" }
         id: toolTip
         text: qsTr("show desktop")
         toolTipX: DockPanelPositioner.x
@@ -48,6 +48,7 @@ AppletItem {
 
         onClicked: {
             toolTip.close()
+            Panel.requestClosePopup()
             Applet.toggleShowDesktop()
         }
         onHoveredChanged: {

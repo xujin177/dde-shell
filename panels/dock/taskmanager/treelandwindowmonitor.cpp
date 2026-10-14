@@ -51,7 +51,8 @@ TreeLandDockPreviewContext::TreeLandDockPreviewContext(struct ::treeland_dock_pr
 
 TreeLandDockPreviewContext::~TreeLandDockPreviewContext()
 {
-    destroy();
+    if (isInitialized())
+        destroy();
 }
 
 void TreeLandDockPreviewContext::showWindowsPreview(QByteArray windowsId, int32_t previewXoffset, int32_t previewYoffset, uint32_t direction)
@@ -233,7 +234,7 @@ void TreeLandWindowMonitor::handleForeignToplevelHandleRemoved()
 void TreeLandWindowMonitor::updateFullscreenState()
 {
     for (auto window : std::as_const(m_windows)) {
-        if (window && window->isFullscreen()) {
+        if (window && window->isFullscreen() && !window->isMinimized()) {
             if (!m_fullscreenState) {
                 m_fullscreenState = true;
                 emit windowFullscreenChanged(true);
